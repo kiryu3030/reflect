@@ -52,16 +52,5 @@ const angleService = {
     }
   },
 }
-// const setAngle = async(req, res) => {
-//   try {
-//     const { horizontal, vertical } = req.body;
-//     logging.info(`${horizontal}, ${vertical}`);
-    
-//     return res.status(200).json({ message: 'User registered successfully' });
-//   } catch (error) {
-//     logging.error(error);
-//     return res.status(500).json({ error: 'Internal server error' });
-//   }
-// };
 
 export default angleService;

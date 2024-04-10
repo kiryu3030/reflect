@@ -1,4 +1,4 @@
-import {mainApp} from './app/app.js';
+import mainApp from './app/app.js';
 import logger from './app/config/log.config.js';
 import {fileName} from './app/utilities/file.js';
 

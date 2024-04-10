@@ -12,8 +12,4 @@ htmlRoute.get('/', (req, res) => {
   res.sendFile(path.join(HTML_DIR, 'index.html'));
 });
 
-htmlRoute.get('/test', (req, res) => {
-  res.sendFile(path.join(HTML_DIR, 'index.html'));
-});
-
 export default htmlRoute;

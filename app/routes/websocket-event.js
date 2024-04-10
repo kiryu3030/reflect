@@ -1,4 +1,3 @@
-import {io} from '../app.js'
 import logger from '../config/log.config.js';
 import {fileName} from '../utilities/file.js';
 import { Server } from 'socket.io';
@@ -28,33 +27,4 @@ const WebSocket = {
   }
 };
 
-// /**
-//  * Mount socket.io event.
-//  * @param {Server} io 
-//  */
-// function mountEvent(io){
-//   io.on('connection', async (socket) => {
-//     logging.info(`User:${socket.id} connected`);
-
-//     socket.on('disconnect', () => {
-//       logging.info(`user:${socket.id} disconnected`);
-//     });
-
-
-//   });
-// }
-
-// class WebSocket{
-//   /**
-//    * socket.io Server
-//    * @param {Server} io 
-//    */
-//   constructor(io){
-//     this.io = io;
-//   }
-
-  
-// }
-
-// export default mountEvent;
 export default WebSocket;

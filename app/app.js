@@ -29,11 +29,8 @@ app.use(errorHandler);
 const mainApp = createServer(app);
 const io = new Server(mainApp, {cors: {origin: "*" }});
 
-// import mountEvent from './routes/websocket-event.js';
-// mountEvent(io);
-
 import WebSocket from './routes/websocket-event.js';
 WebSocket.init(io);
 WebSocket.mountEvent();
 
-export {mainApp, io};
+export default mainApp;
