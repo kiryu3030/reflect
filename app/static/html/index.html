@@ -44,6 +44,16 @@
           <button id="data-submit" type="button" class="btn btn-primary" style="width: 15%;">確定</button>
         </div>
       </div>
+      <!-- 測試 -->
+      <div class="mt-4">
+        <h5 class="card-title">測試</h5>
+        <hr>
+        <div class="col-12 text-center">
+          <hr>
+          <button id="id-test" type="button" class="btn btn-primary" style="width: 15%;">ID test</button>
+          <button id="id-test-all" type="button" class="btn btn-primary" style="width: 15%;">get commands</button>
+        </div>
+      </div>
       <!-- <div class="card mt-4">
         <div class="card-body">
           
@@ -64,6 +74,37 @@
   });
 </script>
 <script>
+$("#id-test-all").on("click", function(){
+$.ajax({
+  type: "GET",
+  url: `/api/command`,
+  dataType: "json",
+  contentType: "application/json"
+})
+.done(function(data) {
+  console.log(data);
+})
+.fail(function(jqXHR, textStatus, errorThrown) {
+  console.log(errorThrown);
+});
+});
+
+$("#id-test").on("click", function(){
+  $.ajax({
+    type: "GET",
+    url: `/api/command/6617ba6169314052cf014a31`,
+    dataType: "json",
+    contentType: "application/json"
+  })
+  .done(function(data) {
+    console.log(data);
+    console.log(data.msg.horizontal);
+  })
+  .fail(function(jqXHR, textStatus, errorThrown) {
+    console.log(errorThrown);
+  });
+});
+
 $("#data-submit").on("click", function(){
   let dataSubmit = {};
   let errorCount = 0;

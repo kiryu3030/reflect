@@ -1,5 +1,5 @@
-import logger from '../config/log.config.js';
-import {fileName} from '../utilities/file.js';
+import logger from '../../config/log.config.js';
+import {fileName} from '../../utilities/file.js';
 import { Server } from 'socket.io';
 
 const logging = logger(fileName(import.meta.url));

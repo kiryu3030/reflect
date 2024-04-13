@@ -2,7 +2,7 @@ class response {
   /**
    * api response.
    * @param {number} id 
-   * @param {string} msg 
+   * @param {Object} msg 
    */
   constructor(id, msg) {
     this.id = id;

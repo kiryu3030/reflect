@@ -1,5 +1,5 @@
 import express from 'express';
-import angleService from '../services/angle.service.js';
+import angleService from './angle.service.js';
 
 const angleRoute = express.Router();
 

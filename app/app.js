@@ -11,10 +11,15 @@ import { apiRoute, htmlRoute } from './routes/routes.js'
 
 import errorHandler from './middleware/error-handler.js';
 
+import mongoose from 'mongoose';
+import connectDB from './database/database.js'
+
 const __dirname = dirName(import.meta.url);
 const logging = logger(fileName(import.meta.url));
 
 const app = express();
+
+connectDB();
 
 app.use(cors());
 app.use(express.json());
@@ -29,7 +34,7 @@ app.use(errorHandler);
 const mainApp = createServer(app);
 const io = new Server(mainApp, {cors: {origin: "*" }});
 
-import WebSocket from './routes/websocket-event.js';
+import WebSocket from './routes/websocket/websocket-event.js';
 WebSocket.init(io);
 WebSocket.mountEvent();
 
