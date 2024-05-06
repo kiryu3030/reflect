@@ -6,6 +6,7 @@ import requestCode from '../../utilities/response-code.js'
 import WebSocket from '../websocket/websocket-event.js'
 import Command from '../command/command.model.js'
 import timeFormat from '../../utilities/time-format.js'
+import mqttClient from '../../mqtt/mqtt-client.js';
 
 const logging = logger(fileName(import.meta.url));
 
@@ -38,6 +39,8 @@ const angleService = {
       await command.save();
 
       WebSocket.sendTestEvent({horizontal:horizontal, vertical:vertical});
+      
+      // mqttClient.sendCommand(`horizontal: ${horizontal}, vertical: ${vertical}`);
       
       res.status(200).json(new response(requestCode.ok, `setAngle(${horizontal}, ${vertical})`));
     } catch (error) {

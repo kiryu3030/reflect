@@ -105,10 +105,147 @@
     <div class="col-lg-9 col-12">
       <div class="mt-2">
         <!-- 新增站點 -->
-        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add-station-modal"><i class="bi bi-plus-lg"></i> 新增站點</button>
+        <button id="back-list" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add-station-modal"><i class="bi bi-box-arrow-in-left"></i> 回到列表</button>
 
+        <div id="station-state" class="pt-2">
+          <div class="card">
+            <!-- 基本資料 -->
+            <form class="p-3">
+              <div class="row">
+                <label class="col-sm-2 col-form-label">站點名稱</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control-plaintext" name="stationName" id="stationName" value="N/A" readonly>
+                </div>
+                <label class="col-sm-2 col-form-label">站點ID</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control-plaintext" name="stationId" id="stationId" value="N/A" readonly>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-12 col-form-label">站點狀態</label>
+              </div>
+              <div class="row">
+                <div class="col-sm-11">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label text-e">狀態</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control-plaintext" name="mcu-state" id="mcu-state" value="取得資訊中......" readonly>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label text-e">水平角度</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control-plaintext" name="mcu-horizontal" id="mcu-horizontal" value="取得資訊中......" readonly>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label text-e">水平角度</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control-plaintext" name="mcu-vertical" id="mcu-vertical" value="取得資訊中......" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button id="station-sync" type="button" class="btn btn-primary btn-sm">同步</button>
+              </div>
+            </form>
+          </div>
+          <br>
+        </div>
+
+        <!-- 控制 -->
+        <div id="angle">
+          <div style="border-radius: 5px;">
+            <form class="p-3">
+              <div class="row">
+                <div class="fs-5 mb-2">調整角度</div>
+                <hr>
+              </div>
+              <div class="row">
+                <div class="col-md-6 has-validation">
+                  <label for="horizontal" class="form-label">水平角度</label>
+                  <input type="number" step="1" class="form-control" id="horizontal" name="horizontal" required>
+                  <div class="invalid-feedback text-end">·請輸入正確範圍0~360度 ·不含小數點</div>
+                </div>
+                <div class="col-md-6 has-validation">
+                  <label for="vertical" class="form-label">垂直角度</label>
+                  <input type="number" step="1" class="form-control" id="vertical" name="vertical" required>
+                  <div class="invalid-feedback text-end">·請輸入正確範圍-60~60度 ·不含小數點</div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center pt-3">
+                <button id="data-submit" type="button" class="btn btn-primary btn-sm">確定</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- 控制 -->
+        <div id="angle11" class="pt-3">
+          <div class="bg-image" style="border-radius: 5px;">
+            <form class="p-3">
+              <div class="row">
+                <div class="fs-5 mb-2">調整角度</div>
+                <hr>
+              </div>
+              <div class="row">
+                <div class="col-md-6 has-validation">
+                  <label for="horizontal" class="form-label">水平角度</label>
+                  <input type="number" step="0.01" class="form-control" id="horizontal11" name="horizontal" required>
+                  <div class="invalid-feedback text-end">·請輸入正確範圍0~360度 ·整數</div>
+                </div>
+                <div class="col-md-6 has-validation">
+                  <label for="vertical" class="form-label">垂直角度</label>
+                  <input type="number" step="0.01" class="form-control" id="vertical11" name="vertical" required>
+                  <div class="invalid-feedback text-end">·請輸入正確範圍-60~60度 ·整數</div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center pt-3">
+                <button id="data-submit11" type="button" class="btn btn-primary btn-sm">確定</button>
+              </div>
+            </form>
+            <div class="mask" style="background-color: hsla(0, 0%, 0%, 0.45)">
+              <div class="d-flex justify-content-center align-items-center h-100">
+                <div>
+                  <div class="display-4 text-white text-center"><i class="bi bi-ban"></i></div>
+                  <div class="text-white mb-0">系統尚未同步</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 解鎖 -->
+        <div id="bless3" class="pt-3">
+          <div class="card bg-image">
+            <!-- 基本資料 -->
+            <form class="p-3">
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label text-e">MCU-ID開始<i style="color: red;">*</i></label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="mcu-id-blink-all-s" id="mcu-id-blink-all-s" required>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label text-e">MCU-ID結束<i style="color: red;">*</i></label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="mcu-id-blink-all-e" id="mcu-id-blink-all-e" required>
+                </div>
+              </div>
+            </form>
+            <div class="mask" style="background-color: hsla(0, 0%, 0%, 0.45)">
+              <div class="d-flex justify-content-center align-items-center h-100">
+                <div>
+                  <div class="display-4 text-white text-center"><i class="bi bi-ban"></i></div>
+                  <div class="text-white mb-0">系統尚未同步</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- TABLE -->
-        <div>
+        <!-- <div>
           <table 
           id="table" 
           data-ajax="stationRequest" 
@@ -129,26 +266,10 @@
               </tr>
             </thead>
           </table>
-        </div>
+        </div> -->
 
-        <h5 class="card-title">控制角反射器</h5>
-        <hr>
-        <div id="angle" class="row mb-3">
-          <div class="col-md-6 has-validation">
-            <label for="horizontal" class="form-label">水平角度</label>
-            <input type="number" step="0.01" class="form-control" id="horizontal" name="horizontal" required>
-            <div class="invalid-feedback text-end">請輸入正確範圍0~360度</div>
-          </div>
-          <div class="col-md-6 has-validation">
-            <label for="vertical" class="form-label">垂直角度</label>
-            <input type="number" step="0.01" class="form-control" id="vertical" name="vertical" required>
-            <div class="invalid-feedback text-end">請輸入正確範圍-60~60度</div>
-          </div>
-        </div>
-        <div class="col-12 text-center">
-          <hr>
-          <button id="data-submit" type="button" class="btn btn-primary" style="width: 15%;">確定</button>
-        </div>
+        
+
       </div>
       <!-- 測試 -->
       <div class="mt-4">
@@ -214,9 +335,6 @@ window.operateEvents = {
   'click .operate': function (e, value, row, index) {
     // alert('You click like action, row: ' + JSON.stringify(row))
     console.log("row['light_pos']");
-    let host = window.location.hostname;
-    if(host.includes("127") || host.includes("192")) window.location.href=`http://${host}:${window.location.port}/station?qid=${row._id}`;
-    else window.location.href=`https://${host}/station?qid=${row._id}`;
   }
 }
 // modify field
@@ -307,8 +425,29 @@ function showAlert(data) {
   $("#alert-msg").html(data['msg']);
   alertModal.show();
 }
+function setStationTitle(data) {
+  $("#stationName").val(data.msg.stationName);
+  $("#stationId").val(data.msg.stationId);
+}
 </script>
 <script>
+$(window).ready(function() {
+let urlPar = new URLSearchParams(window.location.search);
+if(!urlPar.has("qid")) history.back();
+$.ajax({
+  type: "GET",
+  url: `/api/station/${urlPar.get("qid")}`,
+  dataType: "json",
+  contentType: "application/json"
+})
+.done(function(data) {
+  console.log(data);
+  setStationTitle(data);
+})
+.fail(function(jqXHR, textStatus, errorThrown) {
+  console.log(errorThrown);
+});
+});
 $("#alert-close").on("click", function(){
   $("#alert-title").html("");
   $("#alert-msg").html("");
@@ -346,56 +485,14 @@ $("#id-test").on("click", function(){
   });
 });
 
-$("#add-station").on("click", function(){
-  let pkt = new StationPacket();
-  pkt.user = socket.id;
-  let re = /[^\w]/g;
-  let errorCount = 0;
-
-  $(`#station input`).each(function(){
-    let name = $(this).attr("name");
-    let val = $(this).val();
-    if($(this).is(":required")){
-      if(val==""){
-        $(this).addClass("is-invalid");
-        errorCount += 1;
-      }
-      // && (val.length<=0 || val.length>8)
-      else if(name=="stationId" && (val.match(re) != null || val.length>8)){
-        $(this).addClass("is-invalid");
-        errorCount += 1;
-      }
-      else $(this).removeClass("is-invalid");
-    }
-    if(name=="stationName") pkt.stationName = val;
-    if(name=="stationId") pkt.stationId = val;
-    if(name=="comment") pkt.comment = val;
-  });
-  // console.log(pkt.json())
-  if(!errorCount){
-    $.ajax({
-      type: "POST",
-      url: `/api/station`,
-      dataType: "json",
-      contentType: "application/json",
-      data: JSON.stringify(pkt.json())
-    })
-    .done(function(data) {
-      console.log(data['msg']);
-      closeAddSstation();
-      reloadStationTable();
-    })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-      console.log(errorThrown);
-      showAlert(jqXHR.responseJSON);
-    });
-    // console.log(dataSubmit);
-  }
+$("#back-list").on("click", function(){
+  history.back();
 });
 
 $("#data-submit").on("click", function(){
   let pkt = new AnglePacket();
   pkt.user = socket.id;
+  let re = /\D/g;
   let errorCount = 0;
 
   $(`#angle input`).each(function(){
@@ -405,11 +502,57 @@ $("#data-submit").on("click", function(){
       $(this).addClass("is-invalid");
       errorCount += 1;
     }
-    else if(name=="horizontal" && (val<0 || val>360)){
+    else if(name=="horizontal" && (val<0 || val>360 || val.match(re) != null)){
       $(this).addClass("is-invalid");
       errorCount += 1;
     }
-    else if(name=="vertical" && (val<-60 || val>60)){
+    else if(name=="vertical" && (val<-60 || val>60 || val.match(re) != null)){
+      $(this).addClass("is-invalid");
+      errorCount += 1;
+    }
+    else $(this).removeClass("is-invalid");
+
+    if(name=="horizontal") pkt.horizontal = parseFloat(val);
+    if(name=="vertical") pkt.vertical = parseFloat(val);
+  });
+
+  if(!errorCount){
+    $.ajax({
+      type: "POST",
+      url: `/api/angle`,
+      dataType: "json",
+      contentType: "application/json",
+      data: JSON.stringify(pkt.json())
+    })
+    .done(function(data) {
+      console.log(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      console.log(errorThrown);
+    });
+    // console.log(dataSubmit);
+  }
+  else console.log("Data range not correct");
+});
+// GET MCU狀態
+$("#station-sync").on("click", function(){
+  let pkt = new AnglePacket();
+  pkt.user = socket.id;
+  let re = /\D/g;
+  let errorCount = 0;
+
+  $(`#angle input`).each(function(){
+    let name = $(this).attr("name");
+    let val = $(this).val();
+    if(val==""){
+      $(this).addClass("is-invalid");
+      errorCount += 1;
+    }
+    else if(name=="horizontal" && (val<0 || val>360 || val.match(re) != null)){
+      $(this).addClass("is-invalid");
+      errorCount += 1;
+    }
+    else if(name=="vertical" && (val<-60 || val>60 || val.match(re) != null)){
       $(this).addClass("is-invalid");
       errorCount += 1;
     }
