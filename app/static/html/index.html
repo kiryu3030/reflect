@@ -215,7 +215,7 @@ window.operateEvents = {
     // alert('You click like action, row: ' + JSON.stringify(row))
     console.log("row['light_pos']");
     let host = window.location.hostname;
-    if(host.includes("127") || host.includes("192")) window.location.href=`http://${host}:${window.location.port}/station?qid=${row._id}`;
+    if(host.includes("127") || host.includes("192") || host.includes("107")) window.location.href=`http://${host}:${window.location.port}/station?qid=${row._id}`;
     else window.location.href=`https://${host}/station?qid=${row._id}`;
   }
 }
