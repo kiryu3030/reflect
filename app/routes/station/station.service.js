@@ -6,8 +6,16 @@ import requestCode from '../../utilities/response-code.js';
 import AppException from '../../utilities/app-exception.js';
 import Station from './station.model.js';
 import timeFormat from '../../utilities/time-format.js';
+import mqttClient from '../../mqtt/mqtt-client.js';
+import { MAX_QUERY, QUERY_SOCKET_DICT, SEND_CMD_TIME_DICT, ANGLE_SOCKET_DICT } from '../../utilities/global-state.js';
 
 const logging = logger(fileName(import.meta.url));
+
+// 最好是redis
+let QUERY_ID = 0;
+// let MAX_QUERY = 5;
+// let QUERY_SOCKET_DICT = {};
+// let QUERY_TIME_DICT = {};
 
 const stationService = {
   /**
@@ -122,9 +130,44 @@ const stationService = {
       //     }
       //   }
       // }
+
       const { socketId, stationId } = req.body;
+      // console.log(`${socketId}${stationId}`);
+
+      // const stations = await Station.find({}).exec();
+      // const stationsOffset = await Station.find({date: {"$lt":"2024-5-6 0:0:0.0"}}).skip(0).limit(15).sort({date: 1}).exec();
+      // let tableData = {
+      //   total: stations.length,
+      //   totalNotFiltered: stations.length,
+      //   rows: stationsOffset
+      // }
+
+      let queryId = QUERY_ID%MAX_QUERY;
+      QUERY_SOCKET_DICT[queryId] = socketId;
+      QUERY_ID += 1;
+      // console.log(QUERY_SOCKET_DICT);
+
+      // #define SERVER_CMD_TEST 0x0
+      // #define MCU_RESPONE_TEST 0x1
+      // #define MCU_RESPONE_SELF_STATE 0x2
+      let SERVER_CMD_SELF_STATE = 3;
+      // struct SERVER_CMD_SELF_STATE_PACKET
+      // {
+      //   uint8_t messageType; 1
+      //   uint8_t queryId; 1
+      //   uint8_t stationId; 1
+      // };
+
+      const SELF_STATE_PACKET_LEN = 3;
+      const buf = Buffer.allocUnsafe(SELF_STATE_PACKET_LEN);
+      buf.writeUint8(SERVER_CMD_SELF_STATE, 0);
+      buf.writeUint8(queryId, 1);
+      buf.writeUint8(stationId, 2);
+      console.log(buf);
+      mqttClient.sendCommand(stationId, buf);
       
       res.status(200).json(new response(requestCode.ok, "station.toJSON()"));
+      // res.status(200).json(new response(requestCode.ok, tableData));
     } catch (error) {
       logging.error(error);
       next(error);

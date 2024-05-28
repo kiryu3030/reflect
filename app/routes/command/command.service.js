@@ -47,15 +47,15 @@ const commandService = {
       // mqttClient.sendCommand(`id: ${id}`);
       
       // res.status(200).json(new response(requestCode.ok, command.toJSON()));
-      const SERVER_CMD_PACKET_LEN = 10;
-      const buf = Buffer.allocUnsafe(SERVER_CMD_PACKET_LEN);
-      buf.writeUint8(0, 0);
-      buf.writeUInt32BE(1714990934, 1);
-      buf.writeUint8(30, 5);
-      buf.writeInt16BE(140, 6);
-      buf.writeInt16BE(-55, 8);
-      console.log(buf);
-      mqttClient.sendCommand(buf);
+      // const SERVER_CMD_PACKET_LEN = 10;
+      // const buf = Buffer.allocUnsafe(SERVER_CMD_PACKET_LEN);
+      // buf.writeUint8(0, 0);
+      // buf.writeUInt32BE(1714990934, 1);
+      // buf.writeUint8(30, 5);
+      // buf.writeInt16BE(140, 6);
+      // buf.writeInt16BE(-55, 8);
+      // console.log(buf);
+      // mqttClient.sendCommand(buf);
 
       res.status(200).json(new response(requestCode.ok, "command.toJSON()"));
     } catch (error) {

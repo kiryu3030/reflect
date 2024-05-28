@@ -32,6 +32,7 @@ const checkDBAndMQTT = (req, res, next) => {
       throw new AppException(500, requestCode.db_error, `DB not ready or disconnected. State:${mongoose.connection.readyState}`);
     }
     else if(!mqttClient.state()){
+      mqttClient.connect();
       throw new AppException(500, requestCode.mqtt_error, `MQTT not ready or disconnected.`);
     }
     else next();

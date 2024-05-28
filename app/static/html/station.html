@@ -78,6 +78,26 @@
     </div>
   </div>
 </div>
+<!-- load Modal -->
+<div class="modal fade" id="load-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="load-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row flex-column">
+            <div class="col pt-2"><div class="loading"></div></div>
+            <div class="col">
+              <p class="text-center" style="font-size: 20px;margin-top: 15px;">等待裝置回應</p>
+            </div>
+            <div class="col">
+              <p id="load-timer" class="text-center" style="font-size: 12px;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- alert Modal -->
 <div class="modal fade" id="alert-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="alert-modal-label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -105,10 +125,11 @@
     <div class="col-lg-9 col-12">
       <div class="mt-2">
         <!-- 新增站點 -->
-        <button id="back-list" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add-station-modal"><i class="bi bi-box-arrow-in-left"></i> 回到列表</button>
+        <button id="back-list" type="button" class="btn btn-secondary"><i class="bi bi-box-arrow-in-left"></i> 回到列表</button>
 
         <div id="station-state" class="pt-2">
-          <div class="card">
+          <div class="card ">
+            <div class="border border-primary border-3 rounded-top" style="width: 100%;"></div>
             <!-- 基本資料 -->
             <form class="p-3">
               <div class="row">
@@ -121,32 +142,29 @@
                   <input type="text" class="form-control-plaintext" name="stationId" id="stationId" value="N/A" readonly>
                 </div>
               </div>
+              <hr>
               <div class="row">
-                <label class="col-sm-12 col-form-label">站點狀態</label>
+                <label class="col-sm-12 col-form-label">站點資訊</label>
               </div>
-              <div class="row">
-                <div class="col-sm-11">
-                  <div class="row">
-                    <label class="col-sm-2 col-form-label text-e">狀態</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control-plaintext" name="mcu-state" id="mcu-state" value="取得資訊中......" readonly>
+              <div class="card">
+                <div class="row mx-1">
+                  <div class="col-sm-12 py-2">
+                    <div class="d-flex py-2">
+                      <label class="d-inline" style="min-width: 80px; text-align: right;">狀態：</label>
+                      <div class="d-inline mx-1" name="mcu-state" id="mcu-state" style="color: red;">尚未同步</div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <label class="col-sm-2 col-form-label text-e">水平角度</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control-plaintext" name="mcu-horizontal" id="mcu-horizontal" value="取得資訊中......" readonly>
+                    <div class="d-flex py-2">
+                      <label class="d-inline" style="min-width: 80px;">水平角度：</label>
+                      <div class="d-inline mx-1" name="mcu-horizontal" id="mcu-horizontal">N/A</div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <label class="col-sm-2 col-form-label text-e">水平角度</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control-plaintext" name="mcu-vertical" id="mcu-vertical" value="取得資訊中......" readonly>
+                    <div class="d-flex py-2">
+                      <label class="d-inline" style="min-width: 80px;">水平角度：</label>
+                      <div class="d-inline mx-1" name="mcu-vertical" id="mcu-vertical">N/A</div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="d-flex justify-content-center">
+              <div class="d-flex justify-content-center pt-3">
                 <button id="station-sync" type="button" class="btn btn-primary btn-sm">同步</button>
               </div>
             </form>
@@ -154,9 +172,11 @@
           <br>
         </div>
 
-        <!-- 控制 -->
+        <!-- 調整角度 -->
         <div id="angle">
-          <div style="border-radius: 5px;">
+          <!-- style="border-radius: 5px;" -->
+          <div class="card bg-image">
+            <div class="border border-primary border-3 rounded-top" style="width: 100%;"></div>
             <form class="p-3">
               <div class="row">
                 <div class="fs-5 mb-2">調整角度</div>
@@ -178,72 +198,17 @@
                 <button id="data-submit" type="button" class="btn btn-primary btn-sm">確定</button>
               </div>
             </form>
-          </div>
-        </div>
-
-        <!-- 控制 -->
-        <div id="angle11" class="pt-3">
-          <div class="bg-image" style="border-radius: 5px;">
-            <form class="p-3">
-              <div class="row">
-                <div class="fs-5 mb-2">調整角度</div>
-                <hr>
-              </div>
-              <div class="row">
-                <div class="col-md-6 has-validation">
-                  <label for="horizontal" class="form-label">水平角度</label>
-                  <input type="number" step="0.01" class="form-control" id="horizontal11" name="horizontal" required>
-                  <div class="invalid-feedback text-end">·請輸入正確範圍0~360度 ·整數</div>
-                </div>
-                <div class="col-md-6 has-validation">
-                  <label for="vertical" class="form-label">垂直角度</label>
-                  <input type="number" step="0.01" class="form-control" id="vertical11" name="vertical" required>
-                  <div class="invalid-feedback text-end">·請輸入正確範圍-60~60度 ·整數</div>
-                </div>
-              </div>
-              <div class="d-flex justify-content-center pt-3">
-                <button id="data-submit11" type="button" class="btn btn-primary btn-sm">確定</button>
-              </div>
-            </form>
-            <div class="mask" style="background-color: hsla(0, 0%, 0%, 0.45)">
+            <div id="lock-angle-mask" class="mask" style="background-color: hsla(0, 0%, 0%, 0.45)">
               <div class="d-flex justify-content-center align-items-center h-100">
                 <div>
                   <div class="display-4 text-white text-center"><i class="bi bi-ban"></i></div>
-                  <div class="text-white mb-0">系統尚未同步</div>
+                  <div class="text-white mb-0 mt-1">系統尚未同步</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 解鎖 -->
-        <div id="bless3" class="pt-3">
-          <div class="card bg-image">
-            <!-- 基本資料 -->
-            <form class="p-3">
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label text-e">MCU-ID開始<i style="color: red;">*</i></label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" name="mcu-id-blink-all-s" id="mcu-id-blink-all-s" required>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label text-e">MCU-ID結束<i style="color: red;">*</i></label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" name="mcu-id-blink-all-e" id="mcu-id-blink-all-e" required>
-                </div>
-              </div>
-            </form>
-            <div class="mask" style="background-color: hsla(0, 0%, 0%, 0.45)">
-              <div class="d-flex justify-content-center align-items-center h-100">
-                <div>
-                  <div class="display-4 text-white text-center"><i class="bi bi-ban"></i></div>
-                  <div class="text-white mb-0">系統尚未同步</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <!-- TABLE -->
         <!-- <div>
           <table 
@@ -275,6 +240,35 @@
       <div class="mt-4">
         <h5 class="card-title">測試</h5>
         <hr>
+        <div id="stepper">
+          <!-- style="border-radius: 5px;" -->
+          <div class="card">
+            <div class="border border-primary border-3 rounded-top" style="width: 100%;"></div>
+            <form class="p-3">
+              <div class="row">
+                <div class="fs-5 mb-2">調整步進馬達</div>
+                <hr>
+              </div>
+              <div class="row">
+                <div class="col-md-6 has-validation">
+                  <label for="horizontal" class="form-label">水平步數</label>
+                  <input type="number" step="1" class="form-control" id="horizontalStep" name="horizontalStep" required>
+                  <div class="invalid-feedback text-end">·請輸入正確範圍-32,768~32,767 ·不含小數點</div>
+                </div>
+                <div class="col-md-6 has-validation">
+                  <label for="vertical" class="form-label">垂直步數</label>
+                  <input type="number" step="1" class="form-control" id="verticalStep" name="verticalStep" required>
+                  <div class="invalid-feedback text-end">·請輸入正確範圍-32,768~32,767 ·不含小數點</div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center pt-3">
+                <button id="stepper-submit" type="button" class="btn btn-primary btn-sm">確定</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
         <div class="col-12 text-center">
           <hr>
           <button id="id-test" type="button" class="btn btn-primary" style="width: 15%;">ID test</button>
@@ -365,11 +359,26 @@ window.modifyEvents = {
     });
   }
 }
+
+function updateSelfState(data) {
+  $(`#mcu-state`).text("同步").css({"color": "green"});
+  $(`#mcu-horizontal`).text(data.msg.horizontal);
+  $(`#mcu-vertical`).text(data.msg.vertical);
+}
+function unLockAngle() {
+  $(`#lock-angle-mask`).remove();
+}
 </script>
 <script>
   const socket = io({transports: ['websocket']});
   socket.on("web_respones", (data) => {
     console.log(`${data.horizontal}, ${data.vertical}`);
+  });
+  socket.on("self_state_respones", (data) => {
+    console.log(data);
+    updateSelfState(data);
+    closeLoad();
+    unLockAngle();
   });
   socket.on("connect", () => {
     console.log(`User:${socket.id} connected`);
@@ -378,6 +387,10 @@ window.modifyEvents = {
 <script>
 var alertModal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#alert-modal'));
 var addstationModal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#add-station-modal'));
+var loadModal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#load-modal'));
+var loadTimeout;
+var loadTimer;
+var pageTimeout = 0;
 let responeCode = {
   1: "完成",
   2: "錯誤",
@@ -386,13 +399,15 @@ let responeCode = {
   5: "MQTT錯誤",
 };
 class AnglePacket {
-  user = "";
+  socketId = "";
+  stationId = "";
   horizontal = 0;
   vertical = 0;
 
   json(){
     return {
-      user: this.user,
+      socketId: this.socketId,
+      stationId: this.stationId,
       horizontal: this.horizontal,
       vertical: this.vertical
     }
@@ -413,6 +428,32 @@ class StationPacket {
     }
   }
 }
+class SelfStatePacket {
+  socketId = "";
+  stationId = "";
+
+  json(){
+    return {
+      socketId: this.socketId,
+      stationId: this.stationId
+    }
+  }
+}
+class StepperPacket {
+  socketId = "";
+  stationId = "";
+  horizontalStep = 0;
+  verticalStep = 0;
+
+  json(){
+    return {
+      socketId: this.socketId,
+      stationId: this.stationId,
+      horizontalStep: this.horizontalStep,
+      verticalStep: this.verticalStep
+    }
+  }
+}
 function closeAddSstation() {
   $(`#station input`).each(function(){
     $(this).val("");
@@ -429,11 +470,50 @@ function setStationTitle(data) {
   $("#stationName").val(data.msg.stationName);
   $("#stationId").val(data.msg.stationId);
 }
+function showLoad(timeout) {
+  $("#load-timer").text(timeout/1000);
+  
+  loadTimeout = setTimeout(showTimeoutAlert, timeout);
+  loadTimer = setInterval(updateLoadTimer, 1000);
+  loadModal.show();
+}
+function closeLoad() {
+  clearLoadTimer();
+  loadModal.hide();
+}
+function showTimeoutAlert() {
+  let data = {"id": 2, "msg": "裝置沒有回應"};
+  showAlert(data);
+  closeLoad();
+}
+function clearLoadTimer() {
+  clearTimeout(loadTimeout);
+  clearInterval(loadTimer);
+  loadTimeout = null;
+  loadTimer = null;
+}
+function updateLoadTimer() {
+  let s = parseInt($("#load-timer").text());
+  s -= 1;
+  $("#load-timer").text(s);
+}
+function showPageTimeoutAlert() {
+  let data = {"id": 2, "msg": "網頁已逾時，請重新整理"};
+  showAlert(data);
+}
+function checkPageTimeout() {
+  if(Date.now()/1000-pageTimeout>=3600) {
+    showPageTimeoutAlert();
+    return true;
+  }
+  return false;
+}
 </script>
 <script>
 $(window).ready(function() {
 let urlPar = new URLSearchParams(window.location.search);
 if(!urlPar.has("qid")) history.back();
+pageTimeout = Date.now()/1000;
 $.ajax({
   type: "GET",
   url: `/api/station/${urlPar.get("qid")}`,
@@ -466,6 +546,7 @@ $.ajax({
 })
 .fail(function(jqXHR, textStatus, errorThrown) {
   console.log(errorThrown);
+  showAlert(jqXHR.responseJSON);
 });
 });
 
@@ -482,17 +563,20 @@ $("#id-test").on("click", function(){
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
     console.log(errorThrown);
+    showAlert(jqXHR.responseJSON);
   });
 });
 
 $("#back-list").on("click", function(){
   history.back();
 });
-
+// 調整角度
 $("#data-submit").on("click", function(){
+  if(checkPageTimeout()) return;
   let pkt = new AnglePacket();
-  pkt.user = socket.id;
-  let re = /\D/g;
+  pkt.socketId = socket.id;
+  pkt.stationId = $("#stationId").val();
+  let re = /[\.]/g;
   let errorCount = 0;
 
   $(`#angle input`).each(function(){
@@ -526,9 +610,11 @@ $("#data-submit").on("click", function(){
     })
     .done(function(data) {
       console.log(data);
+      showLoad(40000);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
       console.log(errorThrown);
+      showAlert(jqXHR.responseJSON);
     });
     // console.log(dataSubmit);
   }
@@ -536,45 +622,75 @@ $("#data-submit").on("click", function(){
 });
 // GET MCU狀態
 $("#station-sync").on("click", function(){
-  let pkt = new AnglePacket();
-  pkt.user = socket.id;
-  let re = /\D/g;
+  if(checkPageTimeout()) return;
+  let pkt = new SelfStatePacket();
+  pkt.socketId = socket.id;
+  pkt.stationId = $("#stationId").val();
+  if (pkt.stationId=="N/A") {
+    console.log("ID: N/A");
+    return;
+  }
+  $.ajax({
+    type: "POST",
+    url: `/api/station/state`,
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(pkt.json())
+  })
+  .done(function(data) {
+    console.log(data);
+    showLoad(15000);
+  })
+  .fail(function(jqXHR, textStatus, errorThrown) {
+    console.log(errorThrown);
+    showAlert(jqXHR.responseJSON);
+  });
+});
+// 測試步進馬達
+$("#stepper-submit").on("click", function(){
+  if(checkPageTimeout()) return;
+  let pkt = new StepperPacket();
+  pkt.socketId = socket.id;
+  pkt.stationId = $("#stationId").val();
+  let re = /[\.]/g;
   let errorCount = 0;
 
-  $(`#angle input`).each(function(){
+  $(`#stepper input`).each(function(){
     let name = $(this).attr("name");
     let val = $(this).val();
     if(val==""){
       $(this).addClass("is-invalid");
       errorCount += 1;
     }
-    else if(name=="horizontal" && (val<0 || val>360 || val.match(re) != null)){
+    else if(name=="horizontalStep" && (val<-32768 || val>32767 || val.match(re) != null)){
       $(this).addClass("is-invalid");
       errorCount += 1;
     }
-    else if(name=="vertical" && (val<-60 || val>60 || val.match(re) != null)){
+    else if(name=="verticalStep" && (val<-32768 || val>32767 || val.match(re) != null)){
       $(this).addClass("is-invalid");
       errorCount += 1;
     }
     else $(this).removeClass("is-invalid");
 
-    if(name=="horizontal") pkt.horizontal = parseFloat(val);
-    if(name=="vertical") pkt.vertical = parseFloat(val);
+    if(name=="horizontalStep") pkt.horizontalStep = parseFloat(val);
+    if(name=="verticalStep") pkt.verticalStep = parseFloat(val);
   });
 
   if(!errorCount){
     $.ajax({
       type: "POST",
-      url: `/api/angle`,
+      url: `/api/angle/stepper`,
       dataType: "json",
       contentType: "application/json",
       data: JSON.stringify(pkt.json())
     })
     .done(function(data) {
       console.log(data);
+      showLoad(40000);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
       console.log(errorThrown);
+      showAlert(jqXHR.responseJSON);
     });
     // console.log(dataSubmit);
   }

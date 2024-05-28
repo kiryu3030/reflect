@@ -24,7 +24,12 @@ const WebSocket = {
 
   sendTestEvent: async (msg) => {
     WebSocket.io.emit('web_respones', msg)
+  },
+
+  sendSelfStateEvent: async (socketId, msg) => {
+    WebSocket.io.to(socketId).emit('self_state_respones', msg)
   }
+
 };
 
 export default WebSocket;
